@@ -1,5 +1,6 @@
 import React from "react";
 import { minutesToDuration } from "../utils/duration";
+import { secondsToDuration } from "../utils/duration";
 
 export default function Session ({ session, currentDuration }){
     if (!session) return null;
@@ -15,7 +16,7 @@ export default function Session ({ session, currentDuration }){
             </h2>
             {/* TODO: Update message below correctly format the time remaining in the current session */}
             <p className="lead" data-testid="session-sub-title">
-              {session?.timeRemaining} remaining
+               {secondsToDuration(session?.timeRemaining)} remaining
             </p>
           </div>
         </div>
