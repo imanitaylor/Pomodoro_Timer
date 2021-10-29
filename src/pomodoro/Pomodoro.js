@@ -48,14 +48,20 @@ function nextSession(focusDuration, breakDuration) {
 }
 
 function Pomodoro() {
+  
+  const INITIAL_STATE ={
+    isTimerRunning: false,
+    session: null,
+  }
+  
   // Timer starts out paused
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [isTimerRunning, setIsTimerRunning] = useState(INITIAL_STATE.isTimerRunning);
   // The current session - null where there is no session running
-  const [session, setSession] = useState(null);
+  const [session, setSession] = useState(INITIAL_STATE.session);
 
   // ToDo: Allow the user to adjust the focus and break duration.
-  const focusDuration = 25;
-  const breakDuration = 5;
+  const [focusDuration, setFocusDuration] = useState(25);
+  const [breakDuration, setBreakDuration] = useState(5);
 
   /**
    * Custom hook that invokes the callback function every second
@@ -95,34 +101,41 @@ function Pomodoro() {
     });
   }
 
+
+  function handleIncreaseBreak(){
+      if (breakDuration === 15) return;
+      setBreakDuration(state => state + 1);
+  }
+
+  function handleDecreaseBreak(){
+    if (breakDuration === 1) return;
+      setBreakDuration(state => state - 1);
+  }
+
+  function handleIncreaseFocus(){
+    if (focusDuration === 60) return;
+      setFocusDuration(state => state + 5);
+  }
+
+  function handleDecreaseFocus(){
+    if (focusDuration === 5) return;
+      setFocusDuration(state => state - 5);
+  }
+
+
+  function handleStop(event){
+      event.preventDefault();
+      setIsTimerRunning(INITIAL_STATE.isTimerRunnng);
+      setSession(INITIAL_STATE.session);
+  }
+
+
+
   return (
     <div className="pomodoro">
       <div className="row">
         <div className="col">
-          <div className="input-group input-group-lg mb-2">
-            <span className="input-group-text" data-testid="duration-focus">
-              {/* TODO: Update this text to display the current focus session duration */}
-              Focus Duration: 25:00
-            </span>
-            <div className="input-group-append">
-              {/* TODO: Implement decreasing focus duration and disable during a focus or break session */}
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-testid="decrease-focus"
-              >
-                <span className="oi oi-minus" />
-              </button>
-              {/* TODO: Implement increasing focus duration  and disable during a focus or break session */}
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-testid="increase-focus"
-              >
-                <span className="oi oi-plus" />
-              </button>
-            </div>
-          </div>
+          <TimerDisplay label="Focus" duration={focusDuration} handleDecrease={handleDecreaseFocus} handleIncrease={handleIncreaseFocus}/>
         </div>
         <div className="col">
           <div className="float-right">
