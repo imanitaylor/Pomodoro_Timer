@@ -7,15 +7,21 @@ export default function TimerDisplay({
   handleDecrease,
   handleIncrease,
   isDisabled,
-}) 
-{
+}) {
   return (
     <>
+    <div className="row">
+        <div className="col">
       <div className="input-group input-group-lg mb-2">
-        <span className="input-group-text" data-testid={`duration-${label.toLowerCase()}`}>
+        <span
+          className="input-group-text"
+          data-testid={`duration-${label.toLowerCase()}`}
+        >
           {/* TODO: Update this text to display the current focus session duration */}
           {label} Duration: {minutesToDuration(duration)}
+
         </span>
+
         <div className="input-group-append">
           {/* TODO: Implement decreasing focus duration and disable during a focus or break session */}
           <button
@@ -39,6 +45,8 @@ export default function TimerDisplay({
           </button>
         </div>
       </div>
+      </div>
+    </div>
     </>
   );
 }
