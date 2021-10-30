@@ -1,10 +1,15 @@
 import React from "react";
 import { minutesToDuration, secondsToDuration } from "../utils/duration";
 
-export default function Session ({ session, currentDuration, now}){
+export default function Session ({ session, currentDuration, focusDuration, breakDuration}){
 
+  let timer = (session?.label === "Focusing" ? focusDuration : breakDuration)
+  
+   //count up percentage
+  const progressBar = (((`${timer}`*60) - session?.timeRemaining) / (`${timer}`*60)) * 100
   if (!session) return null;
-    return (
+    
+  return (
     <div>
         {/* TODO: This area should show only when there is an active focus or break - i.e. the session is running or is paused */}
         <div className="row mb-2">
@@ -27,8 +32,8 @@ export default function Session ({ session, currentDuration, now}){
                 role="progressbar"
                 aria-valuemin="0"
                 aria-valuemax="100"
-                aria-valuenow={now} // TODO: Increase aria-valuenow as elapsed time increases
-                style={{ width: `${now}%` }} // TODO: Increase width % as elapsed time increases
+                aria-valuenow={progressBar} // TODO: Increase aria-valuenow as elapsed time increases
+                style={{ width: `${progressBar}%` }} // TODO: Increase width % as elapsed time increases
               />
             </div>
           </div>

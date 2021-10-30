@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import classNames from "../utils/class-names";
 import useInterval from "../utils/useInterval";
 import Session from "./Session";
@@ -82,18 +82,7 @@ function Pomodoro() {
   );
 
 
-  let x = null;
-  session?.label === "Focusing" ? x = focusDuration : x = breakDuration;
-  
-   //count up percentage
-  const secondInterval = (((`${x}`*60) - session?.timeRemaining) / (`${x}`*60)) * 100
-
-
-
-
-  
-
-
+ 
 
   /**
    * Called whenever the play/pause button is clicked.
@@ -189,16 +178,14 @@ function Pomodoro() {
               data-testid="stop"
               title="Stop the session"
               disabled={!session}
-              onClick={function(event) {
-                handleStop(event);
-              }}
+              onClick={event => handleStop(event) }
             >
               <span className="oi oi-media-stop" />
             </button>
           </div>
         </div>
         </div>
-      <Session session = {session} currentDuration={session?.label === "Focusing" ? focusDuration : breakDuration} now={secondInterval}/>
+      <Session session = {session} currentDuration={session?.label === "Focusing" ? focusDuration : breakDuration} focusDuration={focusDuration} breakDuration={breakDuration} />
     </div>
   );
 }
