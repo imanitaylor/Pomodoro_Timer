@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classNames from "../utils/class-names";
 import useInterval from "../utils/useInterval";
 import Session from "./Session";
@@ -64,7 +64,8 @@ function Pomodoro() {
   // ToDo: Allow the user to adjust the focus and break duration.
   const [focusDuration, setFocusDuration] = useState(25);
   const [breakDuration, setBreakDuration] = useState(5);
-
+  
+  
   /**
    * Custom hook that invokes the callback function every second
    *
@@ -79,6 +80,20 @@ function Pomodoro() {
     },
     isTimerRunning ? 1000 : null
   );
+
+
+  let x = null;
+  session?.label === "Focusing" ? x = focusDuration : x = breakDuration;
+  
+   //count up percentage
+  const secondInterval = (((`${x}`*60) - session?.timeRemaining) / (`${x}`*60)) * 100
+
+
+
+
+  
+
+
 
   /**
    * Called whenever the play/pause button is clicked.
@@ -132,7 +147,6 @@ function Pomodoro() {
   }
 
 
-
   return (
     <div className="pomodoro">
       <div className="row">
@@ -184,7 +198,7 @@ function Pomodoro() {
           </div>
         </div>
         </div>
-      <Session session = {session} currentDuration={session?.label === "Focusing" ? focusDuration : breakDuration} />
+      <Session session = {session} currentDuration={session?.label === "Focusing" ? focusDuration : breakDuration} now={secondInterval}/>
     </div>
   );
 }

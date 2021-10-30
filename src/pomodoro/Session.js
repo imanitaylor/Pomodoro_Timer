@@ -1,10 +1,9 @@
 import React from "react";
-import { minutesToDuration } from "../utils/duration";
-import { secondsToDuration } from "../utils/duration";
+import { minutesToDuration, secondsToDuration } from "../utils/duration";
 
-export default function Session ({ session, currentDuration }){
-    if (!session) return null;
+export default function Session ({ session, currentDuration, now}){
 
+  if (!session) return null;
     return (
     <div>
         {/* TODO: This area should show only when there is an active focus or break - i.e. the session is running or is paused */}
@@ -28,8 +27,8 @@ export default function Session ({ session, currentDuration }){
                 role="progressbar"
                 aria-valuemin="0"
                 aria-valuemax="100"
-                aria-valuenow="0" // TODO: Increase aria-valuenow as elapsed time increases
-                style={{ width: "0%" }} // TODO: Increase width % as elapsed time increases
+                aria-valuenow={now} // TODO: Increase aria-valuenow as elapsed time increases
+                style={{ width: `${now}%` }} // TODO: Increase width % as elapsed time increases
               />
             </div>
           </div>
@@ -37,3 +36,7 @@ export default function Session ({ session, currentDuration }){
       </div>
 )
 }
+
+
+
+
